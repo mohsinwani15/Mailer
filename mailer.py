@@ -2,21 +2,25 @@ import smtplib
 from email.message import EmailMessage
 from string import Template
 from pathlib import Path
+import sys
 
-def mailer (email, name, subject):
-    html  = Template(Path("index.html").read_text())
-    email = EmailMessage()
-    email['from'] = 'your_name'
-    email['to'] = email
-    email['subject'] = subject
+recipient_email = sys.argv[1]
+recipient_name = sys.argv[2]
+subject = sys.argv[3]
 
-    email.set_content(html.substitute({'name': name}), 'html')
 
-    with smtplib.SMTP(host='smtp.gmail.com', port=587) as smtp:
-        smtp.ehlo()
-        smtp.starttls()
-        smtp.login #(  your_email,password/ app password)
-        smtp.send_message(email)
-        print('all good boss!')
+html  = Template(Path("index.html").read_text())
+email = EmailMessage()
+email['from'] = 'your_name'
+email['to'] = recipient_email
+email['subject'] = subject
 
-#mailer(Your_Email,Name,Your_Subject)
+email.set_content(html.substitute({'name': recipient_name}), 'html')
+
+with smtplib.SMTP(host='smtp.gmail.com', port=587) as smtp:
+    smtp.ehlo()
+    smtp.starttls()
+    smtp.login #(  your_email,password/app password)
+    smtp.send_message(email)
+    print('all good boss!')
+
