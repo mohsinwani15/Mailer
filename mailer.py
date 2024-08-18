@@ -20,7 +20,9 @@ email.set_content(html.substitute({'Message': message}), 'html')
 with smtplib.SMTP(host='smtp.gmail.com', port=587) as smtp:
     smtp.ehlo()
     smtp.starttls()
-    smtp.login #(  your_email,password/app password)
+    smtp.login('mohsinwani00@gmail.com', 'npewfrxeebaxveap')
+    #smtp.login (your_email,password/app password)
     smtp.send_message(email)
     print('all good boss!')
+
 
